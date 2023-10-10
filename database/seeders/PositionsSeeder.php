@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\Position;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class PositionsSeeder extends Seeder
 {
@@ -12,15 +12,19 @@ class PositionsSeeder extends Seeder
      */
     public function run(): void
     {
-        Position::create([
-            'id' => '1',
-            'name' => 'engineer'
-        ], [
-            'id' => '2',
-            'name' => 'main engineer'
-        ], [
-            'id' => '3',
-            'name' => 'manager'
+        DB::table('positions')->insert([
+            [
+                'id' => '1',
+                'name' => 'engineer'
+            ],
+            [
+                'id' => '2',
+                'name' => 'main engineer'
+            ],
+            [
+                'id' => '3',
+                'name' => 'manager'
+            ]
         ]);
     }
 }
