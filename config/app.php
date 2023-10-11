@@ -185,4 +185,10 @@ return [
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
 
+    'user_roles' => [
+        'manager' => 'MANAGER',
+        'admin' => 'ADMIN',
+        'user' => 'USER'
+    ],
+
 ];
