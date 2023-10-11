@@ -25,4 +25,17 @@ class UserService
 
         return $user;
     }
+
+    public function registerUserValidation(string $email, string $mobile): string|null
+    {
+        if (! empty($this->userRepository->getUserByEmail($email))) {
+            return __('Email is already exist');
+        }
+
+        if (! empty($this->userRepository->getUserByMobile($mobile))) {
+            return __('Mobile number is already registered');
+        }
+
+        return null;
+    }
 }

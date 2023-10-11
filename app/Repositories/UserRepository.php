@@ -11,4 +11,14 @@ class UserRepository implements UserRepositoryInterface
     {
         return User::where('email', $email)->first();
     }
+
+    public function getUserByMobile(string $mobile): User|null
+    {
+        return User::where('mobile', $mobile)->first();
+    }
+
+    public function create(array $userData): User|null
+    {
+        return User::create($userData);
+    }
 }

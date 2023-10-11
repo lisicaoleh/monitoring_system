@@ -22,6 +22,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
     Route::middleware(CheckManagerRole::class)->group(function () {
-        //
+        Route::post('register', [AuthController::class, 'register'])->name('register');
     });
 });
