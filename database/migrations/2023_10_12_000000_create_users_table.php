@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('mobile')->unique();
             $table->string('password');
+            $table->enum('role', config('app.user_roles'));
             $table->rememberToken();
             $table->timestamps();
 

@@ -20,6 +20,7 @@ class UsersSeeder extends Seeder
                 'email' => 'admin@admin.com',
                 'password' => Hash::make('00000000'),
                 'mobile' => '0000000000',
+                'role' => config('app.user_roles.admin')
             ],
             [
                 'first_name' => 'John',
@@ -27,6 +28,7 @@ class UsersSeeder extends Seeder
                 'email' => 'john.doe@example.com',
                 'password' => Hash::make('00000000'),
                 'mobile' => '1234567890',
+                'role' => config('app.user_roles.manager')
             ]
         ]);
     }

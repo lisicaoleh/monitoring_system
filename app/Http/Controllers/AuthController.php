@@ -16,7 +16,7 @@ class AuthController extends Controller
         //
     }
 
-    public function login(LoginRequest $request)
+    public function login(LoginRequest $request): JsonResponse
     {
         $validated = $request->validated();
 
