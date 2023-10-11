@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PositionController;
+use App\Http\Controllers\UserController;
 use App\Http\Middleware\CheckManagerRole;
 use Illuminate\Support\Facades\Route;
 
@@ -23,7 +24,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
     Route::middleware(CheckManagerRole::class)->group(function () {
-        Route::resource('positions', PositionController::class);
+        Route::get('roles', [UserController::class, 'getRoles']);
         Route::post('register', [AuthController::class, 'register'])->name('register');
+        Route::resource('positions', PositionController::class);
     });
 });
