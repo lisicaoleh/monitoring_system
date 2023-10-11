@@ -24,8 +24,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
     Route::middleware(CheckManagerRole::class)->group(function () {
-        Route::get('roles', [UserController::class, 'getRoles']);
         Route::post('register', [AuthController::class, 'register'])->name('register');
+        Route::get('roles', [UserController::class, 'getRoles']);
+        Route::delete('users/{id}', [UserController::class, 'destroy']);
         Route::resource('positions', PositionController::class);
     });
 });
