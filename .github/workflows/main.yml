@@ -17,5 +17,5 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y lftp
-          lftp -u ${{ secrets.FTP_USERNAME }},${{ secrets.FTP_PASSWORD }} -e "mirror -R ./ /www/free1615.host.od.ua; quit" isp2.hosting.ua
+          lftp -u ${{ secrets.FTP_USERNAME }},${{ secrets.FTP_PASSWORD }} -e "mirror -R ./ /www/free1615.host.od.ua; quit" free1615.host.od.ua
 
