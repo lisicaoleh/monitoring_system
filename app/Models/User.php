@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -22,7 +23,8 @@ class User extends Authenticatable
         'email',
         'password',
         'mobile',
-        'position',
+        'position_id',
+        'facility_id',
         'role'
     ];
 
@@ -46,4 +48,14 @@ class User extends Authenticatable
     protected $casts = [
         'password' => 'hashed',
     ];
+
+    public function position(): HasOne
+    {
+        return $this->hasOne(Position::class);
+    }
+
+    public function facility(): HasOne
+    {
+        return $this->hasOne(Facility::class);
+    }
 }
