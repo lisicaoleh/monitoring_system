@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('first_name');
             $table->string('last_name');
-            $table->unsignedBigInteger('position')->nullable();
+            $table->unsignedBigInteger('position_id')->nullable();
+            $table->unsignedBigInteger('facility_id')->nullable();
             $table->string('email')->unique();
             $table->string('mobile')->unique();
             $table->string('password');
@@ -23,7 +24,8 @@ return new class extends Migration
             $table->rememberToken();
             $table->timestamps();
 
-            $table->foreign('position')->references('id')->on('positions')->onDelete('cascade');
+            $table->foreign('position_id')->references('id')->on('positions')->onDelete('cascade');
+            $table->foreign('facility_id')->references('id')->on('facilities')->onDelete('cascade');
         });
     }
 

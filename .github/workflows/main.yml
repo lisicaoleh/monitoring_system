@@ -1,0 +1,23 @@
+name: Deploy to hosting.ua
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup FTP
+        uses: wycliffepepe/ftp-upload-action@v3
+        with:
+          server: free1615.host.od.ua
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          remoteDir: /www/free1615.host.od.ua
+

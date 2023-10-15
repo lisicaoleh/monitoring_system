@@ -3,12 +3,17 @@
 namespace App\Services;
 
 use App\Models\User;
+use App\Repositories\FacilityRepository;
 use App\Repositories\UserRepository;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserService
 {
-    public function __construct(protected UserRepository $userRepository)
+    public function __construct(
+        protected UserRepository $userRepository,
+        protected FacilityRepository $facilityRepository
+    )
     {
         //
     }
@@ -26,14 +31,22 @@ class UserService
         return $user;
     }
 
-    public function registerUserValidation(string $email, string $mobile): string|null
+    public function registerUserValidation(array $user): string|null
     {
-        if (! empty($this->userRepository->getUserByEmail($email))) {
+        if (! empty($this->userRepository->getUserByEmail($user['email']))) {
             return __('Email is already exist');
         }
 
-        if (! empty($this->userRepository->getUserByMobile($mobile))) {
+        if (! empty($this->userRepository->getUserByMobile($user['mobile']))) {
             return __('Mobile number is already registered');
+        }
+
+        if (!isset($user['facility_id']) && Auth::user()->role !== config('app.user_roles.admin')) {
+            return __('facility_if field is required');
+        }
+
+        if (!$this->facilityRepository->getFacilityById($user['facility_id'])) {
+            return __('Facility not found');
         }
 
         return null;
