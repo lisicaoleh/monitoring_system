@@ -46,7 +46,7 @@ class AuthController extends Controller
     public function register(RegisterRequest $request): JsonResponse
     {
         $validated = $request->validated();
-        $validation = $this->userService->registerUserValidation($validated['email'], $validated['mobile']);
+        $validation = $this->userService->registerUserValidation($validated);
         if ($validation) {
             return response()->json(['message' => $validation], 400);
         }
