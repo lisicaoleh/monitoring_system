@@ -17,3 +17,4 @@ jobs:
         server: isp2.hosting.ua
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
+        server-dir: www/free1615.host.od.ua
