@@ -17,5 +17,5 @@ jobs:
         run: |
           apt-get update
           apt-get install -y lftp
-          lftp -u ${{ secrets.FTP_USERNAME }},${{ secrets.FTP_PASSWORD }} -e "mirror -R ./path/to/your/project /public_html; quit" ftp.your-hosting.ua
+          lftp -u ${{ secrets.FTP_USERNAME }},${{ secrets.FTP_PASSWORD }} -e "mirror -R ./ /www/; quit" ftp.your-hosting.ua
 
