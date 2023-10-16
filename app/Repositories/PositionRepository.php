@@ -12,4 +12,9 @@ class PositionRepository implements PositionRepositoryInterface
     {
         return Position::all();
     }
+
+    public function getPositionById(int $id): Position|null
+    {
+        return Position::find($id);
+    }
 }

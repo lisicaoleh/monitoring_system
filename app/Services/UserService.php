@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\User;
 use App\Repositories\FacilityRepository;
+use App\Repositories\PositionRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -12,7 +13,8 @@ class UserService
 {
     public function __construct(
         protected UserRepository $userRepository,
-        protected FacilityRepository $facilityRepository
+        protected FacilityRepository $facilityRepository,
+        protected PositionRepository $positionRepository
     )
     {
         //
@@ -39,6 +41,10 @@ class UserService
 
         if (! empty($this->userRepository->getUserByMobile($user['mobile']))) {
             return __('Mobile number is already registered');
+        }
+
+        if (isset($user['position_id']) && !$this->positionRepository->getPositionById($user['position_id'])) {
+            return __('Position not found');
         }
 
         if (!isset($user['facility_id']) && Auth::user()->role !== config('app.user_roles.admin')) {
