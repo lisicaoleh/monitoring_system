@@ -29,7 +29,7 @@ class UserController extends Controller
         if ($validation) {
             return response()->json(['message' => $validation], 400);
         }
-        
+
         if ($this->userRepository->update($user, $validated)) {
             return response()->json($user);
         }
