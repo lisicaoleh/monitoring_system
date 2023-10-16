@@ -22,6 +22,7 @@ Route::post('login', [AuthController::class, 'login'])->name('login');
 Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+    Route::put('users/{id}', [UserController::class, 'update']);
 
     Route::middleware(CheckManagerRole::class)->group(function () {
         Route::post('register', [AuthController::class, 'register'])->name('register');

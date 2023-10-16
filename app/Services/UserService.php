@@ -33,28 +33,45 @@ class UserService
         return $user;
     }
 
-    public function registerUserValidation(array $user): string|null
+    public function registerUserValidation(array $userData, User $user = null): string|null
     {
-        if (! empty($this->userRepository->getUserByEmail($user['email']))) {
+        if (
+            $user && isset($userData['email']) && $user['email'] !== $userData['email']
+            && ! empty($this->userRepository->getUserByEmail($userData['email']))
+            || !isset($user) && ! empty($this->userRepository->getUserByEmail($userData['email']))
+        ) {
             return __('Email is already exist');
         }
 
-        if (! empty($this->userRepository->getUserByMobile($user['mobile']))) {
+        if (
+            $user && isset($userData['mobile']) && $user['mobile'] !== $userData['mobile']
+            && ! empty($this->userRepository->getUserByMobile($userData['mobile']))
+            || !isset($user) && ! empty($this->userRepository->getUserByMobile($userData['mobile']))
+        ) {
             return __('Mobile number is already registered');
         }
 
-        if (isset($user['position_id']) && !$this->positionRepository->getPositionById($user['position_id'])) {
+        if (isset($userData['position_id']) && !$this->positionRepository->getPositionById($userData['position_id'])) {
             return __('Position not found');
         }
 
-        if (!isset($user['facility_id']) && Auth::user()->role !== config('app.user_roles.admin')) {
-            return __('facility_if field is required');
+        if (!isset($userData['facility_id']) && Auth::user()->role !== config('app.user_roles.admin') && !$user) {
+            return __('facility_id field is required');
         }
 
-        if (!$this->facilityRepository->getFacilityById($user['facility_id'])) {
+        if (
+            $user && isset($userData['facility_id']) && !$this->facilityRepository->getFacilityById($userData['facility_id'])
+            || !$user && !$this->facilityRepository->getFacilityById($userData['facility_id'])
+        ) {
             return __('Facility not found');
         }
 
         return null;
+    }
+
+    public function checkManagerOrSelfUser(User $user): bool
+    {
+        $currentUser = Auth::user();
+        return $currentUser->role === config('app.user_roles.manager') || $currentUser->id === $user->id;
     }
 }
