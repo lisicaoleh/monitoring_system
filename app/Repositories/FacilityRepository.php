@@ -11,4 +11,9 @@ class FacilityRepository implements FacilityRepositoryInterface
     {
         return Facility::find($id);
     }
+
+    public function create(array $data): Facility|null
+    {
+        return Facility::create($data);
+    }
 }

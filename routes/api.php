@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\FacilityController;
 use App\Http\Controllers\PositionController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\CheckManagerRole;
@@ -26,6 +27,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('users/{id}', [UserController::class, 'show']);
 
     Route::middleware(CheckManagerRole::class)->group(function () {
+        Route::post('facilities', [FacilityController::class, 'store']);
         Route::post('register', [AuthController::class, 'register'])->name('register');
         Route::get('roles', [UserController::class, 'getRoles']);
         Route::delete('users/{id}', [UserController::class, 'destroy']);
