@@ -25,6 +25,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
     Route::put('users/{id}', [UserController::class, 'update']);
     Route::get('users/{id}', [UserController::class, 'show']);
+    Route::get('facilities/{id}', [FacilityController::class, 'show']);
 
     Route::middleware(CheckManagerRole::class)->group(function () {
         Route::post('facilities', [FacilityController::class, 'store']);

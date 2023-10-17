@@ -19,4 +19,17 @@ class FacilityController extends Controller
         $validated = $request->validated();
         return response()->json($this->facilityRepository->create($validated), 201);
     }
+
+    public function show(int $id): JsonResponse
+    {
+        $facility = $this->facilityRepository->getFacilityById($id);
+        if ($facility) {
+            return response()->json([
+                'id' => $facility->id,
+                'name' => $facility->name,
+                'constructions' => $facility->constructions
+            ]);
+        }
+        return response()->json(['message' => 'Facility not found'], 400);
+    }
 }
