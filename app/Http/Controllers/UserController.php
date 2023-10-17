@@ -18,6 +18,12 @@ class UserController extends Controller
         //
     }
 
+    public function show(int $id): JsonResponse
+    {
+        $user = $this->userRepository->getUserById($id);
+        return response()->json($user);
+    }
+
     public function update(int $id, UserUpdateRequest $request): JsonResponse
     {
         $validated = $request->validated();
