@@ -26,7 +26,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('users/{id}', [UserController::class, 'update']);
     Route::get('users/{id}', [UserController::class, 'show']);
     Route::get('facilities/{id}', [FacilityController::class, 'show']);
-
+    Route::put('facilities/{id}', [FacilityController::class, 'update']);
+    
     Route::middleware(CheckManagerRole::class)->group(function () {
         Route::post('facilities', [FacilityController::class, 'store']);
         Route::post('register', [AuthController::class, 'register'])->name('register');

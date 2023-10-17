@@ -16,4 +16,9 @@ class FacilityRepository implements FacilityRepositoryInterface
     {
         return Facility::create($data);
     }
+
+    public function update(Facility $facility, array $data): bool
+    {
+        return $facility->update($data);
+    }
 }
