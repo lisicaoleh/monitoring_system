@@ -14,4 +14,9 @@ class Facility extends Model
     {
         return $this->hasMany(Construction::class);
     }
+
+    public function users(): HasMany
+    {
+        return $this->hasMany(User::class);
+    }
 }

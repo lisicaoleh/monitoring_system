@@ -48,4 +48,18 @@ class FacilityController extends Controller
 
         return response()->json(['message' => 'Something went wrong'], 500);
     }
+
+    public function getUsers(int $id): JsonResponse
+    {
+        $facility = $this->facilityRepository->getFacilityById($id);
+        if (! $facility) {
+            return response()->json(['message' => 'Facility not found'], 400);
+        }
+
+        return response()->json([
+            'id' => $facility->id,
+            'name' => $facility->name,
+            'users' => $facility->users
+            ]);
+    }
 }
