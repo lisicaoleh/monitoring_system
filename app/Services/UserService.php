@@ -72,6 +72,16 @@ class UserService
     public function checkManagerOrSelfUser(User $user): bool
     {
         $currentUser = Auth::user();
-        return $currentUser->role === config('app.user_roles.manager') || $currentUser->id === $user->id;
+        $flag = 0;
+
+        if ($currentUser->id === $user->id) {
+            $flag = 1;
+        }
+
+        if ($currentUser->role === config('app.user_roles.manager') && $user->role === config('app.user_roles.user')) {
+            $flag = 1;
+        }
+
+        return $flag;
     }
 }
