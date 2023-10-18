@@ -28,6 +28,10 @@ class UserController extends Controller
     {
         $validated = $request->validated();
         $user = $this->userRepository->getUserById($id);
+        if (!$user) {
+            return response()->json(['User not found'], 400);
+        }
+        
         if (!$this->userService->checkManagerOrSelfUser($user)) {
             return response()->json(['message' => 'Permission denied'], 403);
         }

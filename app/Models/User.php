@@ -25,7 +25,10 @@ class User extends Authenticatable
         'mobile',
         'position_id',
         'facility_id',
-        'role'
+        'role',
+        'is_receive_push_notif',
+        'is_receive_sms_notif',
+        'is_receive_email_notif'
     ];
 
     /**
