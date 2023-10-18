@@ -21,8 +21,8 @@ jobs:
         
     - name: Setup Docker
       run: |
-        ssh -i ./ssh_key ${{ secrets.FTP_USERNAME }}@194.54.91.85 "curl -fsSL https://get.docker.com -o get-docker.sh"
-        ssh -i ./ssh_key ${{ secrets.FTP_USERNAME }}@194.54.91.85 "sudo sh get-docker.sh"
-        ssh -i ./ssh_key ${{ secrets.FTP_USERNAME }}@194.54.91.85 "sudo usermod -aG docker $USER"
-        ssh -i ./ssh_key ${{ secrets.FTP_USERNAME }}@194.54.91.85 "sudo systemctl enable docker"
-        ssh -i ./ssh_key ${{ secrets.FTP_USERNAME }}@194.54.91.85 "sudo systemctl start docker"
+        ssh -i ./ssh_key ${{ secrets.FTP_USERNAME }}@isp2.hosting.ua "curl -fsSL https://get.docker.com -o get-docker.sh"
+        ssh -i ./ssh_key ${{ secrets.FTP_USERNAME }}@isp2.hosting.ua "sudo sh get-docker.sh"
+        ssh -i ./ssh_key ${{ secrets.FTP_USERNAME }}@isp2.hosting.ua "sudo usermod -aG docker $USER"
+        ssh -i ./ssh_key ${{ secrets.FTP_USERNAME }}@isp2.hosting.ua "sudo systemctl enable docker"
+        ssh -i ./ssh_key ${{ secrets.FTP_USERNAME }}@isp2.hosting.ua "sudo systemctl start docker"
