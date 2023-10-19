@@ -2,20 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Mails\Accident;
 use App\Models\Construction;
+use App\Repositories\AccidentRepository;
 use App\Repositories\ConstructionRepository;
 use App\Repositories\UserRepository;
-use Exception;
+use App\Services\AccidentService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Mail;
 
 class AccidentController extends Controller
 {
     public function __construct(
         protected ConstructionRepository $constructionRepository,
-        protected UserRepository $userRepository
+        protected AccidentRepository $accidentRepository,
+        protected AccidentService $accidentService
     )
     {
         //
@@ -29,41 +28,17 @@ class AccidentController extends Controller
         }
 
         $users = $construction->facility->users;
+        $date = date(now());
 
         $notifiedUsers = [];
         foreach ($users as $user) {
-
-            if (!$this->userRepository->checkIsUserReceiveNotif($user)) {
-                continue;
+            $notifiedUser = $this->accidentService->notifyUser($user, $construction, $date);
+            if ($notifiedUser) {
+                $notifiedUsers[] = $notifiedUser;
             }
-
-            $notification = [
-                'user_id' => $user->id,
-                'is_email_sent' => false,
-                'is_sms_sent' => false,
-                'is_push_sent' => false
-            ];
-
-            if ($user->is_receive_email_notif) {
-                try {
-                    Mail::to($user->email)->send(new Accident($construction->name, date(now()), $user->first_name, $user->last_name));
-                    $notification['is_email_sent'] = true;
-                } catch (Exception $e) {
-                    Log::error('Send accident email error: ' . $e->getMessage());
-                }
-            }
-
-            if ($user->is_receive_sms_notif) {
-                //TODO implement sms notification
-            }
-
-            if ($user->is_receive_push_notif) {
-                //TODO implement PUSH notification
-            }
-
-            $notifiedUsers[] = $notification;
         }
 
+        $this->accidentRepository->create($construction->facility->id, $construction->id, $notifiedUsers, $date);
 
         return response()->json('Accident committed');
     }
