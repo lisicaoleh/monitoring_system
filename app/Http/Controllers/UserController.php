@@ -31,7 +31,7 @@ class UserController extends Controller
         if (!$user) {
             return response()->json(['User not found'], 400);
         }
-        
+
         if (!$this->userService->checkManagerOrSelfUser($user)) {
             return response()->json(['message' => 'Permission denied'], 403);
         }

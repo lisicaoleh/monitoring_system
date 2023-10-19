@@ -11,4 +11,5 @@ interface UserRepositoryInterface
     public function getUserByMobile(string $mobile): User|null;
     public function create(array $userData): User|null;
     public function update(User $user, array $userData): bool;
+    public function checkIsUserReceiveNotif(User $user): bool;
 }
