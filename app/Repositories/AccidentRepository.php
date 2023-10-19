@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Http\Interfaces\AccidentRepositoryInterface;
 use App\Models\Accident;
+use Illuminate\Database\Eloquent\Collection;
 
 class AccidentRepository implements AccidentRepositoryInterface
 {
@@ -15,5 +16,10 @@ class AccidentRepository implements AccidentRepositoryInterface
             'notified_users' => json_encode($notifiedUsers),
             'date' => $date
         ]);
+    }
+
+    public function getAccidentByFacilityId(int $id): Collection
+    {
+        return Accident::where('facility_id', $id)->get();
     }
 }
