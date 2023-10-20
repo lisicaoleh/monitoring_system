@@ -31,7 +31,7 @@ class UserUpdateRequest extends FormRequest
         return [
             'first_name' => 'string',
             'last_name' => 'string',
-            'email' => 'email:rfc,dns',
+            'email' => 'email',
             'password' => 'min:4|max:24',
             'mobile' => 'string',
             'role' => 'string|in:'. implode(',', config('app.user_roles')),

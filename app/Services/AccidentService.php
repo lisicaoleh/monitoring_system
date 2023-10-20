@@ -17,7 +17,8 @@ class AccidentService
     public function __construct(
         protected ConstructionRepository $constructionRepository,
         protected UserRepository $userRepository,
-        protected AccidentRepository $accidentRepository
+        protected AccidentRepository $accidentRepository,
+        protected TwilioService $twilioService
     )
     {
         //
@@ -41,7 +42,8 @@ class AccidentService
         }
 
         if ($user->is_receive_sms_notif) {
-            //TODO implement sms notification
+            $message = "We would like to inform you about a critical tilt on the construction named $construction->name, which was detected on $date. This message represents a security alert regarding a serious issue that requires immediate intervention and action. Please take the necessary steps to ensure safety and prevent further risks.";
+            $notification['is_sms_sent'] = $this->twilioService->sendSMS($user->mobile, $message);
         }
 
         if ($user->is_receive_push_notif) {

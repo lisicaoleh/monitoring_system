@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('constructions/{id}/accident/create', [AccidentController::class, 'create']);
+Route::get('constructions/{id}/accidents/create', [AccidentController::class, 'create']);
 
 Route::post('login', [AuthController::class, 'login'])->name('login');
 
