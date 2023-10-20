@@ -22,4 +22,9 @@ class AccidentRepository implements AccidentRepositoryInterface
     {
         return Accident::where('facility_id', $id)->get();
     }
+
+    public function getAccidentById(int $id): Accident|null
+    {
+        return Accident::find($id);
+    }
 }

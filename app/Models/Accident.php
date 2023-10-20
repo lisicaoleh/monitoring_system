@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Accident extends Model
@@ -16,13 +17,13 @@ class Accident extends Model
 
     protected $hidden = ['created_at', 'updated_at'];
 
-    public function facility(): HasOne
+    public function facility(): BelongsTo
     {
-        return $this->hasOne(Facility::class);
+        return $this->belongsTo(Facility::class);
     }
 
-    public function construction(): HasOne
+    public function construction(): BelongsTo
     {
-        return $this->hasOne(Construction::class);
+        return $this->belongsTo(Construction::class);
     }
 }

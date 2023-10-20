@@ -69,4 +69,23 @@ class AccidentController extends Controller
             'accidents' => $formattedAccidents
         ]);
     }
+
+    public function show(int $id): JsonResponse
+    {
+        $accident = $this->accidentRepository->getAccidentById($id);
+        if (!$accident) {
+            return response()->json(['message' => 'Accident not found'], 400);
+        }
+
+        $notifiedUsers = $this->accidentService->getFormattedUsers($accident);
+        return response()->json([
+            'id' => $accident->id,
+            'date' => $accident->date,
+            'facility_id' => $accident->facility->id,
+            'facility_name' => $accident->facility->name,
+            'construction_id' => $accident->construction->id,
+            'construction_name' => $accident->construction->name,
+            'notified_users' => $notifiedUsers
+        ]);
+    }
 }

@@ -63,4 +63,18 @@ class AccidentService
             return false;
         }
     }
+
+    public function getFormattedUsers($accident): array
+    {
+        $notifiedUsers = json_decode($accident->notified_users);
+        $formattedUsers = [];
+        foreach ($notifiedUsers as $notifiedUser) {
+            $formattedUser = $this->userRepository->getUserById($notifiedUser->user_id);
+            $formattedUser["is_email_sent"] = $notifiedUser->is_email_sent;
+            $formattedUser["is_sms_sent"] = $notifiedUser->is_sms_sent;
+            $formattedUser["is_push_sent"] = $notifiedUser->is_push_sent;
+            $formattedUsers[] = $formattedUser;
+        }
+        return $formattedUsers;
+    }
 }
