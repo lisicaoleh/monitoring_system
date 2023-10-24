@@ -55,6 +55,7 @@ class AuthController extends Controller
         if ($user instanceof User) {
             return response()->json($user, 201);
         }
+        //TODO send email with login credentials
 
         return response()->json(['message' => 'Something went wrong'], 500);
     }

@@ -31,10 +31,13 @@ class UserUpdateRequest extends FormRequest
         return [
             'first_name' => 'string',
             'last_name' => 'string',
-            'email' => 'email:rfc,dns',
+            'email' => 'email',
             'password' => 'min:4|max:24',
-            'mobile' => 'string',
+            'mobile' => 'string|regex:/^\+380[0-9]{9}$/',
             'role' => 'string|in:'. implode(',', config('app.user_roles')),
+            'is_receive_push_notif' => 'boolean',
+            'is_receive_sms_notif' => 'boolean',
+            'is_receive_email_notif' => 'boolean',
             'position_id' => 'nullable|int',
             'facility_id' => 'int',
         ];

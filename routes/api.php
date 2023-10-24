@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccidentController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ConstructionController;
 use App\Http\Controllers\FacilityController;
@@ -19,6 +20,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('constructions/{id}/accidents/create', [AccidentController::class, 'create']);
+
 Route::post('login', [AuthController::class, 'login'])->name('login');
 
 Route::middleware('auth:sanctum')->group(function () {
@@ -27,9 +30,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('users/{id}', [UserController::class, 'update']);
     Route::get('users/{id}', [UserController::class, 'show']);
     Route::get('facilities/{id}', [FacilityController::class, 'show']);
-    Route::resource('positions', PositionController::class);
+    Route::get('positions', [PositionController::class, 'index']);
+    Route::get('facilities/{id}/users', [FacilityController::class, 'getUsers']);
 
     Route::middleware(CheckManagerRole::class)->group(function () {
+        Route::get('facilities/{id}/accidents', [AccidentController::class, 'index']);
+        Route::get('accidents/{id}', [AccidentController::class, 'show']);
         Route::put('facilities/{id}', [FacilityController::class, 'update']);
         Route::post('constructions', [ConstructionController::class, 'store']);
         Route::put('constructions/{id}', [ConstructionController::class, 'update']);

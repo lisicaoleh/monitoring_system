@@ -31,4 +31,21 @@ class UserRepository implements UserRepositoryInterface
     {
         return $user->update($userData);
     }
+
+    public function checkIsUserReceiveNotif(User $user): bool
+    {
+        if ($user->is_receive_email_notif) {
+            return true;
+        }
+
+        if ($user->is_receive_sms_notif) {
+            return true;
+        }
+
+        if ($user->is_receive_push_notif) {
+            return true;
+        }
+
+        return false;
+    }
 }

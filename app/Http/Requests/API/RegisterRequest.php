@@ -35,6 +35,9 @@ class RegisterRequest extends FormRequest
             'password' => 'required|min:4|max:24',
             'mobile' => 'required|string',
             'role' => 'required|string|in:'. implode(',', config('app.user_roles')),
+            'is_receive_push_notif' => 'boolean',
+            'is_receive_sms_notif' => 'boolean',
+            'is_receive_email_notif' => 'boolean',
             'position_id' => 'nullable|int',
             'facility_id' => 'nullable|int',
         ];
