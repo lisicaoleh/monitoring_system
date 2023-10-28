@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\API\FacilityStoreRequest;
 use App\Http\Requests\API\FacilityUpdateRequest;
+use App\Models\Facility;
 use App\Repositories\FacilityRepository;
 use Illuminate\Http\JsonResponse;
 
@@ -15,9 +16,17 @@ class FacilityController extends Controller
     {
         //
     }
+
+    public function index(): JsonResponse
+    {
+        return response()->json(Facility::all());
+    }
     public function store(FacilityStoreRequest $request): JsonResponse
     {
         $validated = $request->validated();
+        if ($this->facilityRepository->getFacilityByName($validated['name'])) {
+            return response()->json('Facility name already exist', 400);
+        }
         return response()->json($this->facilityRepository->create($validated), 201);
     }
 

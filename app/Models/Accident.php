@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class Accident extends Model
 {
     protected $fillable = [
+        'id',
         'facility_id',
         'construction_id',
         'notified_users',
