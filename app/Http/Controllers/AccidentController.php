@@ -57,6 +57,7 @@ class AccidentController extends Controller
         foreach ($accidents as $accident) {
             $construction = $this->constructionRepository->getConstructionById($accident->construction_id);
             $formattedAccidents[] = [
+                'id' => $accident->id,
                 'construction_id' => $construction->id,
                 'construction_name' => $construction->name,
                 'date' => $accident->date

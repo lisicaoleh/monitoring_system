@@ -12,6 +12,11 @@ class FacilityRepository implements FacilityRepositoryInterface
         return Facility::find($id);
     }
 
+    public function getFacilityByName(string $name): Facility|null
+    {
+        return Facility::where('name', $name)->first();
+    }
+
     public function create(array $data): Facility|null
     {
         return Facility::create($data);

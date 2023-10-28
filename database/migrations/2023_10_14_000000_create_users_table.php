@@ -21,9 +21,9 @@ return new class extends Migration
             $table->string('mobile')->unique();
             $table->string('password');
             $table->enum('role', config('app.user_roles'));
-            $table->boolean('is_receive_email_notif')->default('null');
-            $table->boolean('is_receive_sms_notif')->default('null');
-            $table->boolean('is_receive_push_notif')->default('null');
+            $table->boolean('is_receive_email_notif')->default('false');
+            $table->boolean('is_receive_sms_notif')->default('false');
+            $table->boolean('is_receive_push_notif')->default('false');
             $table->rememberToken();
             $table->timestamps();
 
