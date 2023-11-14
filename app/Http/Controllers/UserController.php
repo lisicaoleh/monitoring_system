@@ -32,7 +32,7 @@ class UserController extends Controller
             return response()->json(['User not found'], 400);
         }
 
-        if (!$this->userService->checkManagerOrSelfUser($user)) {
+        if (!$this->userService->userUpdatePermissionCheck($user)) {
             return response()->json(['message' => 'Permission denied'], 403);
         }
         $validation = $this->userService->updateUserValidation($validated, $user);
@@ -59,7 +59,7 @@ class UserController extends Controller
             return response()->json(['User not found'], 400);
         }
 
-        if (!$this->userService->checkManagerOrSelfUser($user)) {
+        if (!$this->userService->userUpdatePermissionCheck($user)) {
             return response()->json(['message' => 'Permission denied'], 403);
         }
 

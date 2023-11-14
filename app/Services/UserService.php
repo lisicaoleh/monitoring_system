@@ -75,7 +75,7 @@ class UserService
         return null;
     }
 
-    public function checkManagerOrSelfUser(User $user): bool
+    public function userUpdatePermissionCheck(User $user): bool
     {
         $currentUser = Auth::user();
         $flag = 0;
@@ -84,7 +84,7 @@ class UserService
             $flag = 1;
         }
 
-        if ($currentUser->role === config('app.user_roles.manager') && $user->role === config('app.user_roles.user')) {
+        if ($user->role === config('app.user_roles.user') || $user->role === config('app.user_roles.manager')) {
             $flag = 1;
         }
 
