@@ -65,10 +65,6 @@ class FacilityController extends Controller
             return response()->json(['message' => 'Facility not found'], 400);
         }
 
-        return response()->json([
-            'id' => $facility->id,
-            'name' => $facility->name,
-            'users' => $facility->users
-            ]);
+        return response()->json($facility);
     }
 }

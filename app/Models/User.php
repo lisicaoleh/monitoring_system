@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -24,7 +26,6 @@ class User extends Authenticatable
         'password',
         'mobile',
         'position_id',
-        'facility_id',
         'role',
         'is_receive_push_notif',
         'is_receive_sms_notif',
@@ -52,13 +53,13 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function position(): HasOne
+    public function position(): BelongsTo
     {
-        return $this->hasOne(Position::class);
+        return $this->belongsTo(Position::class);
     }
 
-    public function facility(): HasOne
+    public function facilities(): belongsToMany
     {
-        return $this->hasOne(Facility::class);
+        return $this->belongsToMany(Facility::class, 'facility_user', 'user_id', 'facility_id');
     }
 }

@@ -33,7 +33,9 @@ class AuthController extends Controller
         $user->tokens()->delete();
         $token = $user->createToken('auth-token')->plainTextToken;
 
-        return response()->json(['token' => $token, 'user' => $user]);
+        $resource = $user;
+        $resource->facilities = $user->facilities;
+        return response()->json(['token' => $token, 'user' => $resource]);
     }
 
     public function logout(Request $request): JsonResponse
@@ -46,14 +48,22 @@ class AuthController extends Controller
     public function register(RegisterRequest $request): JsonResponse
     {
         $validated = $request->validated();
-        $validation = $this->userService->registerUserValidation($validated);
+        $user = $this->userRepository->getUserByEmail($validated['email']);
+        $validation = $this->userService->registerUserValidation($validated, $user);
+
         if ($validation) {
             return response()->json(['message' => $validation], 400);
         }
 
-        $user = $this->userRepository->create($validated);
+        if (!$user) {
+            $user = $this->userRepository->create($validated);
+        }
+        $this->userRepository->addToFacility($user, $validated['facility_id']);
+
+        $resource = $user;
+        $resource->facilities = $user->facilities;
         if ($user instanceof User) {
-            return response()->json($user, 201);
+            return response()->json($resource, 201);
         }
         //TODO send email with login credentials
 

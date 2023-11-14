@@ -35,7 +35,7 @@ class UserController extends Controller
         if (!$this->userService->checkManagerOrSelfUser($user)) {
             return response()->json(['message' => 'Permission denied'], 403);
         }
-        $validation = $this->userService->registerUserValidation($validated, $user);
+        $validation = $this->userService->updateUserValidation($validated, $user);
         if ($validation) {
             return response()->json(['message' => $validation], 400);
         }

@@ -9,7 +9,7 @@ class FacilityRepository implements FacilityRepositoryInterface
 {
     public function getFacilityById(int $id): Facility|null
     {
-        return Facility::find($id);
+        return Facility::with('users')->find($id);
     }
 
     public function getFacilityByName(string $name): Facility|null

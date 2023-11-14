@@ -3,13 +3,15 @@
 namespace App\Repositories;
 
 use App\Http\Interfaces\UserRepositoryInterface;
+use App\Models\FacilityUser;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Model;
 
 class UserRepository implements UserRepositoryInterface
 {
     public function getUserById(int $id): User|null
     {
-        return User::find($id);
+        return User::with('facilities')->find($id);
     }
 
     public function getUserByEmail(string $email): User|null
@@ -47,5 +49,13 @@ class UserRepository implements UserRepositoryInterface
         }
 
         return false;
+    }
+
+    public function addToFacility(User $user, int $facilityId): void
+    {
+        FacilityUser::updateOrCreate([
+            'facility_id' => $facilityId,
+            'user_id' => $user->id
+        ]);
     }
 }
