@@ -34,12 +34,11 @@ class UserUpdateRequest extends FormRequest
             'email' => 'email',
             'password' => 'min:4|max:24',
             'mobile' => 'string|regex:/^\+380[0-9]{9}$/',
-            'role' => 'string|in:'. implode(',', config('app.user_roles')),
+            'role' => 'string|in:'.config('app.user_roles.user').','.config('app.user_roles.manager'),
             'is_receive_push_notif' => 'boolean',
             'is_receive_sms_notif' => 'boolean',
             'is_receive_email_notif' => 'boolean',
             'position_id' => 'nullable|int',
-            'facility_id' => 'int',
         ];
     }
 }

@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\API\UserDeleteRequest;
 use App\Http\Requests\API\UserUpdateRequest;
+use App\Models\Facility;
 use App\Models\FacilityUser;
 use App\Models\User;
 use App\Repositories\UserRepository;
 use App\Services\UserService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -49,11 +51,6 @@ class UserController extends Controller
         return response()->json(['message' => 'Something went wrong'], 500);
     }
 
-    public function getRoles(): JsonResponse
-    {
-        return response()->json(config('app.user_roles'));
-    }
-
     public function destroy(int $id, UserDeleteRequest $request): JsonResponse
     {
         $request = $request->validated();
@@ -79,5 +76,18 @@ class UserController extends Controller
             $user->delete();
         }
         return response()->json('1', 204);
+    }
+
+    public function getFacilities(): JsonResponse
+    {
+        $user = $this->userRepository->getUserById(Auth::id());
+        if (!$user) {
+            return response()->json(['User not found'], 400);
+        }
+
+        if ($user->role === config('app.user_roles.admin')) {
+            return response()->json(Facility::all());
+        }
+        return response()->json($user->facilities);
     }
 }

@@ -11,7 +11,7 @@ class UserRepository implements UserRepositoryInterface
 {
     public function getUserById(int $id): User|null
     {
-        return User::with('facilities')->find($id);
+        return User::find($id);
     }
 
     public function getUserByEmail(string $email): User|null

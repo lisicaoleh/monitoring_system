@@ -25,9 +25,9 @@ return new class extends Migration
             $table->boolean('is_receive_push_notif')->default(false);
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('position_id')->references('id')->on('positions')->onDelete('cascade');
-            $table->foreign('facility_id')->references('id')->on('facilities')->onDelete('cascade');
         });
     }
 

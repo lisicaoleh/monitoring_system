@@ -17,10 +17,6 @@ class FacilityController extends Controller
         //
     }
 
-    public function index(): JsonResponse
-    {
-        return response()->json(Facility::all());
-    }
     public function store(FacilityStoreRequest $request): JsonResponse
     {
         $validated = $request->validated();
