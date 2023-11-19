@@ -7,14 +7,14 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\Middleware;
 use Symfony\Component\HttpFoundation\Response;
 
-class CheckManagerRole
+class CheckAdminRole
 {
     public function handle(Request $request, Closure $next)
     {
 
         $user = $request->user();
 
-        if (! $user || $user->role !== config('app.user_roles.manager') && $user->role !== config('app.user_roles.admin')) {
+        if (! $user || $user->role !== config('app.user_roles.admin')) {
             abort(403, 'Permission denied');
         }
 

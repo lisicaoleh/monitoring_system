@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\FacilityUser;
 use App\Models\User;
 use App\Repositories\FacilityRepository;
 use App\Repositories\PositionRepository;
@@ -33,43 +34,48 @@ class UserService
         return $user;
     }
 
-    public function registerUserValidation(array $userData, User $user = null): string|null
+    public function registerUserValidation(array $userData, $user = null): string|null
+    {
+        if (isset($userData['position_id']) && !$this->positionRepository->getPositionById($userData['position_id'])) {
+            return __('Position not found');
+        }
+
+        if (!isset($userData['facility_id']) && Auth::user()->role !== config('app.user_roles.admin')) {
+            return __('facility_id field is required');
+        }
+
+        if (
+            !$this->facilityRepository->getFacilityById($userData['facility_id'])
+        ) {
+            return __('Facility not found');
+        }
+
+        if ($user && FacilityUser::where('user_id', $user->id)->where('facility_id', $userData['facility_id'])->first()) {
+            return __('User already added to facility with ID '.$userData['facility_id']);
+        }
+        return null;
+    }
+
+    public function updateUserValidation(array $userData, User $user): string|null
     {
         if (
-            $user && isset($userData['email']) && $user['email'] !== $userData['email']
+            isset($userData['email']) && $user['email'] !== $userData['email']
             && ! empty($this->userRepository->getUserByEmail($userData['email']))
-            || !isset($user) && ! empty($this->userRepository->getUserByEmail($userData['email']))
         ) {
             return __('Email is already exist');
         }
 
         if (
-            $user && isset($userData['mobile']) && $user['mobile'] !== $userData['mobile']
+            isset($userData['mobile']) && $user['mobile'] !== $userData['mobile']
             && ! empty($this->userRepository->getUserByMobile($userData['mobile']))
-            || !isset($user) && ! empty($this->userRepository->getUserByMobile($userData['mobile']))
         ) {
             return __('Mobile number is already registered');
-        }
-
-        if (isset($userData['position_id']) && !$this->positionRepository->getPositionById($userData['position_id'])) {
-            return __('Position not found');
-        }
-
-        if (!isset($userData['facility_id']) && Auth::user()->role !== config('app.user_roles.admin') && !$user) {
-            return __('facility_id field is required');
-        }
-
-        if (
-            $user && isset($userData['facility_id']) && !$this->facilityRepository->getFacilityById($userData['facility_id'])
-            || !$user && !$this->facilityRepository->getFacilityById($userData['facility_id'])
-        ) {
-            return __('Facility not found');
         }
 
         return null;
     }
 
-    public function checkManagerOrSelfUser(User $user): bool
+    public function userUpdatePermissionCheck(User $user): bool
     {
         $currentUser = Auth::user();
         $flag = 0;
@@ -78,7 +84,7 @@ class UserService
             $flag = 1;
         }
 
-        if ($currentUser->role === config('app.user_roles.manager') && $user->role === config('app.user_roles.user')) {
+        if ($user->role === config('app.user_roles.user') || $user->role === config('app.user_roles.manager')) {
             $flag = 1;
         }
 

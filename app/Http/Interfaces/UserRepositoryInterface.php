@@ -3,6 +3,7 @@
 namespace App\Http\Interfaces;
 
 use App\Models\User;
+use Illuminate\Database\Eloquent\Model;
 
 interface UserRepositoryInterface
 {
@@ -12,4 +13,5 @@ interface UserRepositoryInterface
     public function create(array $userData): User|null;
     public function update(User $user, array $userData): bool;
     public function checkIsUserReceiveNotif(User $user): bool;
+    public function addToFacility(User $user, int $facilityId): void;
 }

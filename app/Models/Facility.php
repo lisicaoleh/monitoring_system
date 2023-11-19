@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Facility extends Model
@@ -15,8 +16,8 @@ class Facility extends Model
         return $this->hasMany(Construction::class);
     }
 
-    public function users(): HasMany
+    public function users(): belongsToMany
     {
-        return $this->hasMany(User::class);
+        return $this->belongsToMany(User::class, 'facility_user', 'facility_id', 'user_id');
     }
 }

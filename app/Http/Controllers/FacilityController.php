@@ -17,10 +17,6 @@ class FacilityController extends Controller
         //
     }
 
-    public function index(): JsonResponse
-    {
-        return response()->json(Facility::all());
-    }
     public function store(FacilityStoreRequest $request): JsonResponse
     {
         $validated = $request->validated();
@@ -65,10 +61,6 @@ class FacilityController extends Controller
             return response()->json(['message' => 'Facility not found'], 400);
         }
 
-        return response()->json([
-            'id' => $facility->id,
-            'name' => $facility->name,
-            'users' => $facility->users
-            ]);
+        return response()->json($facility);
     }
 }

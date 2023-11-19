@@ -31,15 +31,15 @@ class RegisterRequest extends FormRequest
         return [
             'first_name' => 'required|string',
             'last_name' => 'required|string',
-            'email' => 'required|email:rfc,dns',
+            'email' => 'required',
             'password' => 'required|min:4|max:24',
             'mobile' => 'required|string',
-            'role' => 'required|string|in:'. implode(',', config('app.user_roles')),
+            'role' => 'required|string|in:'.config('app.user_roles.user').','.config('app.user_roles.manager'),
             'is_receive_push_notif' => 'boolean',
             'is_receive_sms_notif' => 'boolean',
             'is_receive_email_notif' => 'boolean',
             'position_id' => 'nullable|int',
-            'facility_id' => 'nullable|int',
+            'facility_id' => 'required|int',
         ];
     }
 }

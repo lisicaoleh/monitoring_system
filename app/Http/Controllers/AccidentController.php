@@ -6,7 +6,6 @@ use App\Models\Construction;
 use App\Repositories\AccidentRepository;
 use App\Repositories\ConstructionRepository;
 use App\Repositories\FacilityRepository;
-use App\Repositories\UserRepository;
 use App\Services\AccidentService;
 use Illuminate\Http\JsonResponse;
 

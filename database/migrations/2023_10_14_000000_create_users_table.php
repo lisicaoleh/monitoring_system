@@ -16,19 +16,18 @@ return new class extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->unsignedBigInteger('position_id')->nullable();
-            $table->unsignedBigInteger('facility_id')->nullable();
             $table->string('email')->unique();
             $table->string('mobile')->unique();
             $table->string('password');
             $table->enum('role', config('app.user_roles'));
-            $table->boolean('is_receive_email_notif')->default('false');
-            $table->boolean('is_receive_sms_notif')->default('false');
-            $table->boolean('is_receive_push_notif')->default('false');
+            $table->boolean('is_receive_email_notif')->default(false);
+            $table->boolean('is_receive_sms_notif')->default(false);
+            $table->boolean('is_receive_push_notif')->default(false);
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('position_id')->references('id')->on('positions')->onDelete('cascade');
-            $table->foreign('facility_id')->references('id')->on('facilities')->onDelete('cascade');
         });
     }
 
