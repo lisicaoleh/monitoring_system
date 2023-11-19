@@ -15,7 +15,7 @@ class CheckManagerRole
         $user = $request->user();
 
         if (! $user || $user->role !== config('app.user_roles.manager')) {
-            abort(403, 'Unauthorized');
+            abort(403, 'Permission denied');
         }
 
         return $next($request);
